@@ -1,16 +1,31 @@
 package com.amber.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
 public class Configuration {
 
-    Map<String, MappedStatement> mappedStatementMap = new HashMap<>();
     private DataSource dataSource;
+
+    /*
+     *   key: statementid  value:封装好的mappedStatement对象
+     * */
+    Map<String, MappedStatement> mappedStatementMap = new HashMap<>();
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Map<String, MappedStatement> getMappedStatementMap() {
+        return mappedStatementMap;
+    }
+
+    public void setMappedStatementMap(Map<String, MappedStatement> mappedStatementMap) {
+        this.mappedStatementMap = mappedStatementMap;
+    }
 }

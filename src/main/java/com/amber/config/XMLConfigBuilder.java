@@ -1,5 +1,6 @@
 package com.amber.config;
 
+import com.amber.io.Resources;
 import com.amber.pojo.Configuration;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.dom4j.Document;
@@ -66,6 +67,17 @@ public class XMLConfigBuilder {
 
         // 将ComboPooledDataSource对象设置到Configuration对象中
         configuration.setDataSource(comboPooledDataSource);
+
+        //mapper.xml解析: 拿到路径--字节输入流---dom4j进行解析
+        List<Element> mapperList = rootElement.selectNodes("//mapper");
+
+        for (Element element : mapperList) {
+            String mapperPath = element.attributeValue("resource");
+            InputStream resourceAsSteam = Resources.getResourceAsSteam(mapperPath);
+            XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configuration);
+            xmlMapperBuilder.parse(resourceAsSteam);
+
+        }
 
         // 返回解析后的Configuration对象
         return configuration;
